@@ -29,15 +29,15 @@ var changeColName = function(){
 
 //draws and expands/contracts circle
 var draw = function(e){
-	ctx.clearRect(0, 0, 600, 600);
+	ctx.clearRect(0, 0, 500, 500);
 	ctx.beginPath();
     if(dir == 1){
-		ctx.arc(300,300,cnt,0,2*Math.PI);
+		ctx.arc(250,250,cnt,0,2*Math.PI);
 		ctx.fill();
         cnt += 1;
     }
 	else{
-		ctx.arc(300,300,cnt,0,2*Math.PI);
+		ctx.arc(250,250,cnt,0,2*Math.PI);
 		ctx.fill();
         cnt -= 1;
 	}
@@ -62,7 +62,7 @@ var animate = function(e){
 var stop = function(e){
 	if(doAnim){
 		window.cancelAnimationFrame(frame);
-		ctx.clearRect(0,0,600,600);
+		ctx.clearRect(0,0,500,500);
 		doAnim = false;
 	}
 }
