@@ -11,8 +11,13 @@ ctx.strokeStyle = "#000000";
 
 //variables used for animating
 var doAnim = false;
-var dir = 1; //binary direction -- 0 if in, 1 if out
+var growing = true;
 var cnt = 0;
+var rad = 50;
+var xpos = 250;
+var ypos = 250;
+var vx = 5;
+var vy = 2.5;
 var frame;
 
 //allows the user to change the fill color
@@ -27,11 +32,18 @@ var changeColName = function(){
     //console.log(ctx.strokeStyle);
 }
 
-//draws and expands/contracts circle
-var draw = function(e){
+//allows the user to change the maximum radius of the circle
+var changeRadius = function(){
+    var newRad = document.getElementById('radMax').value;
+    rad = newRad;
+    //console.log(newRad);
+}
+
+//expands/contracts circle
+var drawExpand = function(){
 	ctx.clearRect(0, 0, 500, 500);
 	ctx.beginPath();
-    if(dir == 1){
+    if(growing){
 		ctx.arc(250,250,cnt,0,2*Math.PI);
 		ctx.fill();
         cnt += 1;
@@ -41,23 +53,45 @@ var draw = function(e){
 		ctx.fill();
         cnt -= 1;
 	}
-	if(cnt == 0 || cnt == 50) {
-        if (dir == 1){
-            dir = 0;
-        }
-        else{
-            dir = 1;
-        }
+    if (cnt <= 0){
+        growing = true;
     }
-	frame = window.requestAnimationFrame(draw);
-};
+    if (cnt >= rad){
+        growing = false;
+    }
+	frame = window.requestAnimationFrame(drawExpand);
+}
 
-var animate = function(e){
-	if(!doAnim){
+var animateExpand = function(e){
+	if (!doAnim){
 		doAnim = true;
-		frame = window.requestAnimationFrame(draw);
+		frame = window.requestAnimationFrame(drawExpand);
 	}
-};
+}
+
+//shifts circle like DVD logo
+var drawShift = function(){
+    ctx.clearRect(0, 0, 500, 500);
+    ctx.beginPath();
+    ctx.arc(xpos,ypos,50,0,2*Math.PI);
+    ctx.fill();
+    xpos += vx;
+    if (xpos + 50 >= 500 || xpos - 50 <= 0){
+        vx = vx * -1;
+    }
+    ypos += vy;
+    if (ypos + 50 >= 500 || ypos - 50 <= 0){
+        vy = vy * -1;
+    }
+    frame = window.requestAnimationFrame(drawShift);
+}
+
+var animateShift = function(e){
+	if (!doAnim){
+		doAnim = true;
+		frame = window.requestAnimationFrame(drawShift);
+	}
+}
 
 var stop = function(e){
 	if(doAnim){
@@ -69,6 +103,8 @@ var stop = function(e){
 
 document.getElementById("colName").addEventListener("click", changeColName);
 document.getElementById("stopAnim").addEventListener("click", stop);
-document.getElementById("startAnim").addEventListener("click", animate)
+document.getElementById("startExpand").addEventListener("click", animateExpand);
+document.getElementById("startShift").addEventListener("click", animateShift);
+document.getElementById("changeRad").addEventListener("click",changeRadius);
 
 changeColName();
