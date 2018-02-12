@@ -19,6 +19,10 @@ var ypos = 250;
 var vx = 5;
 var vy = 2.5;
 var frame;
+var width = 497/4;
+var height = 271/4;
+var logo = new Image();
+logo.src = "dvd.png";
 
 //allows the user to change the fill color
 var changeColName = function(){
@@ -72,15 +76,14 @@ var animateExpand = function(e){
 //shifts circle like DVD logo
 var drawShift = function(){
     ctx.clearRect(0, 0, 500, 500);
-    ctx.beginPath();
-    ctx.arc(xpos,ypos,50,0,2*Math.PI);
-    ctx.fill();
+    //ctx.drawImage(logo,xpos-width,ypos-height,2*width,2*height); //bland version
+    ctx.drawImage(logo,xpos-width,ypos-height,2*width,2*height,xpos-width,ypos-height,2*width,2*height); //ascended version
     xpos += vx;
-    if (xpos + 50 >= 500 || xpos - 50 <= 0){
+    if (xpos + width >= 500 || xpos - width <= 0){
         vx = vx * -1;
     }
     ypos += vy;
-    if (ypos + 50 >= 500 || ypos - 50 <= 0){
+    if (ypos + height >= 500 || ypos - height <= 0){
         vy = vy * -1;
     }
     frame = window.requestAnimationFrame(drawShift);
