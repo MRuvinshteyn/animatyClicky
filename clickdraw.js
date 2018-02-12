@@ -19,8 +19,8 @@ var ypos = 250;
 var vx = 5;
 var vy = 2.5;
 var frame;
-var width = 497/4;
-var height = 271/4;
+var width = 500/4;
+var height = 300/4;
 var logo = new Image();
 logo.src = "dvd.png";
 
@@ -77,7 +77,7 @@ var animateExpand = function(e){
 var drawShift = function(){
     ctx.clearRect(0, 0, 500, 500);
     //ctx.drawImage(logo,xpos-width,ypos-height,2*width,2*height); //bland version
-    ctx.drawImage(logo,xpos-width,ypos-height,2*width,2*height,xpos-width,ypos-height,2*width,2*height); //ascended version
+    ctx.drawImage(logo,xpos-width,ypos-height,2*width,2*height,xpos-width,ypos,2*width,2*height); //ascended version
     xpos += vx;
     if (xpos + width >= 500 || xpos - width <= 0){
         vx = vx * -1;
